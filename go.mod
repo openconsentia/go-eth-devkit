@@ -1,4 +1,4 @@
-module gethdevkit
+module goethdevkit
 
 go 1.15
 
