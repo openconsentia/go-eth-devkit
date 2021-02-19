@@ -1,0 +1,81 @@
+# Copyright 2020 The Open Consentia Contributors
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# node build phase
+# In this phase, we pull artefacts to build ReactJS webapp for
+# development
+
+version: '3.4'
+
+services:
+
+    router:
+        image: binocarlos/noxy
+        ports:
+            - 80:80
+        container_name: router
+        environment:
+            - NOXY_DEFAULT_HOST=react-artefacts
+            - NOXY_DEFAULT_PORT=3030
+            - NOXY_DEFAULT_WS=1
+            - NOXY_API_FRONT=/api
+            - NOXY_API_HOST=rest-artefacts
+            - NOXY_API_PORT=9000
+        networks:
+            - goweb_dev_network
+
+    react-artefacts:
+        build:
+            context: ../../
+            dockerfile: ./deployments/dev/react.dockerfile
+            args: 
+                node_ver: 13.10.1
+        image: ${REACT_IMAGE_NAME}:${IMAGE_TAG}
+        container_name: react-artefacts
+        expose:
+            - 3030
+        ports:
+            - 3030:3030
+        volumes:
+            - ../../web/reactjs/src:/opt/src
+            - ../../web/reactjs/webpack:/opt/webpack
+            - ../../web/reactjs/.babelrc:/opt/.babelrc
+            - ../../web/reactjs/images:/opt/images
+            - ../..//web/reactjs/.eslintrc.json:/opt/.eslintrc.json
+        networks:
+            - goweb_dev_network
+
+    rest-artefacts:
+        image: golang:1.13.3
+        working_dir: /opt
+        command: ["./go-run.sh"]
+        container_name: rest-artefacts
+        environment: 
+            - REST_SERVER_NAME=goreact # This corresponds with ./cmd/goreact {modify this to meet your requirement}
+        expose:
+            - 9000
+        ports:
+            - 9000:9000
+        volumes: 
+            - ../../cmd:/opt/cmd
+            - ../../internal:/opt/internal
+            - ../../go.mod:/opt/go.mod
+            - ../../go.sum:/opt/go.sum
+            - ./go-run.sh:/opt/go-run.sh
+        networks:
+            - goweb_dev_network
+
+# Replace network name 
+networks:
+    goweb_dev_network:

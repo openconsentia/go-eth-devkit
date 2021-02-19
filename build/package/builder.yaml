@@ -1,0 +1,51 @@
+# Copyright 2020 The Open Consentia Contributors
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+version: '3.4'
+
+services:
+
+    native:
+        build:
+            context: ../../
+            dockerfile: ./build/package/native.dockerfile
+            args:
+                NODE_VER: 13.10.1
+                GO_VER: 1.13.3
+                WEB_FRAMEWORK: reactjs
+                APP_NAME: dapp # This corresponds with ./cmd/goreact {modify to meet your requirements}
+        image: ${NATIVE_BUILD_IMAGE:-native_build_image:current}
+        container_name: ${NATIVE_BUILD_CONTAINER:-native_build_container}
+        working_dir: /opt
+        command: ./gobuild.sh
+        environment:
+            - APP_NAME=dapp # This corresponds with ./cmd/goreact {modify to meet your requirements}
+        volumes:
+            - ./gobuild.sh:/opt/gobuild.sh
+            - ../../build/native:/opt/build/package
+
+    container:
+        build:
+            context: ../../
+            dockerfile: ./build/package/container.dockerfile # Modify this to your requirements
+            args:
+                NODE_VER: 13.10.1
+                GO_VER: 1.13.3
+                WEB_FRAMEWORK: reactjs
+                APP_NAME: dapp # This corresponds with ./cmd/goreact {modify to meet your requirements}
+        image: ${APP_IMAGE_NAME:-paulwizviz/goreact:current}
+        container_name: ${APP_TEST_CONTAINER_NAME:-test_container}
+        command: ./dapp start ui # Modify this accordingly
+        ports:
+            - 80:80
