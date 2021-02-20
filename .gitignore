@@ -7,3 +7,6 @@ web/reactjs/public
 
 # Ignore build packages
 build/native
+
+# Ignore direnv config
+.envrc
