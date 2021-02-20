@@ -1,13 +1,11 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
+	"goethdevkit/internal/gethwrap"
+	"goethdevkit/internal/infurawrap"
 	"log"
-
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 func parseFlag() map[string]string {
@@ -30,31 +28,6 @@ func parseFlag() map[string]string {
 	return flagValues
 }
 
-func queryTransaction(url string, id string, txnHash string) error {
-	nettURL := fmt.Sprintf("%s/%s", url, id)
-	conn, err := ethclient.Dial(nettURL)
-	if err != nil {
-		return err
-	}
-
-	ctx := context.Background()
-	tx, pending, err := conn.TransactionByHash(ctx, common.HexToHash(txnHash))
-	if err != nil {
-		return err
-	}
-
-	if !pending {
-		fmt.Printf("Data: %v\n", string(tx.Data()))
-		fmt.Printf("Gas: %v", tx.Gas())
-	}
-
-	return nil
-}
-
-func queryMainNet(id string, txnHash string) error {
-	return queryTransaction("https://mainnet.infura.io/v3", id, txnHash)
-}
-
 func main() {
 
 	flagValues := parseFlag()
@@ -71,8 +44,15 @@ func main() {
 		log.Fatal("Txn hash missing")
 	}
 
-	err := queryMainNet(projectID, txnHash)
+	mainNetURL := infurawrap.InfuraMainNetURL
+	result, err := gethwrap.InfuraQueryTxnByHash(mainNetURL, projectID, txnHash, 1)
 	if err != nil {
-		log.Fatalf("Error: %v", err)
+		log.Fatalf("Query transaction failed. Reason: %s", err.Error())
 	}
+
+	fmt.Println("ChainID: ", result.ChainID)
+	fmt.Println("Nounce:  ", result.Nounce)
+	fmt.Println("Gas limit", result.GasLimit)
+	fmt.Println("Value", result.Value)
+	fmt.Println("Payload", string(result.Payload))
 }
