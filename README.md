@@ -2,12 +2,18 @@
 
 This is a project experimenting with different approaches to implement Ethereum Decentralized application (DApp) using Go as the principal middleware development language and ReactJS as User Interface (UI).
 
-## What to expect in this project
+## What to expect in this project?
 
-You will find codes demonstrating:
+| Item | Description |
+| --- | --- |
+| Geth wrapper| Using Geth packages to build middleware. |
+| Infura wrapper | Wrappers with calls via Infura. |
 
-* the use of Geth to build middleware
-* the integration with Infura
+## How to use this project?
+
+Please refer to the following documents:
+
+* [docs/layout.md](../docs/layout.md)
 
 ## Caveat
 
