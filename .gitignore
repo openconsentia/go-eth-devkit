@@ -10,3 +10,6 @@ build/native
 
 # Ignore direnv config
 .envrc
+
+# Generated items
+internal/token/
