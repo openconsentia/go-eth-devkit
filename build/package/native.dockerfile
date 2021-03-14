@@ -50,10 +50,14 @@ FROM golang:${GO_VER}
 
 WORKDIR /opt
 
+ARG WEB_FRAMEWORK
+
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./build/package/go-rice.sh ./build/go-rice.sh
-COPY --from=nodebuild /opt/public ./web
+COPY --from=nodebuild /opt/public/index.html ./internal/server/index.html
+COPY --from=nodebuild /opt/public/bundle.js ./internal/server/bundle.js
+COPY --from=nodebuild /opt/public/images ./internal/server/images
+
 
 COPY ./go.mod ./go.mod
 COPY ./go.sum ./go.sum
