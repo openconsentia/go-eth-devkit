@@ -39,14 +39,6 @@ This folder containers Bash scripts to trigger build processes and to execute va
 * [./scripts/dev.sh](../scripts/dev.sh) to trigger the build process for apps configure for development;
 * [./scripts/native.sh](../scripts/native.sh) to trigger build processes to generate native (macOS, Linux and Windows) application.
 
-## `./solidity`
-
-This folder for you to place your solidity codes.
-
-## `tools`
-
-This folder contains codes or executable apps to support your development work. The principal tool is a Docker based solidity compiler and a Go code generator of your solidity codes.
-
 ## `./web`
 
 This folder contains codes to create UI artefacts. In this context there is a basic `./web/reactjs`. You can add more if you wish.
