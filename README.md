@@ -2,6 +2,12 @@
 
 This is an experimental development kit to help you create Ethereum based native (macOS, Linux and Windows) Decentralize Application (DApp) using Go as the principal middleware programming language and ReactJS (or any web based UI).
 
+## Prerequisite
+
+This project is an adjunct to [https://github.com/openconsentia/gosol](https://github.com/openconsentia/gosol). Clone that project and use it generate Go binding for your solidity contract. This will ensure that DApp you are building here is able to interact with your solidity contract.
+
+Please install docker.
+
 ## What to expect in this project?
 
 | Item | Description |
