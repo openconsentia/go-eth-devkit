@@ -1,0 +1,8 @@
+title: "Geth Tools"
+remote_theme: paulwizviz/just-the-docs
+color_scheme: "light"
+search_enabled: true
+
+aux_links:
+    "Open Consentia on GitHub":
+      - "//github.com/openconsentia/go-eth-devkit"
