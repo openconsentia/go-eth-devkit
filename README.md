@@ -1,31 +1,36 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/openconsentia/geth-tools)](https://goreportcard.com/report/github.com/openconsentia/geth-tools)
+
 # Overview
 
-This is an experimental development kit to help you create Ethereum based native (macOS, Linux and Windows) Decentralize Application (DApp) using Go as the principal middleware programming language and ReactJS (or any web based UI).
+`go-eth-devkit` is a template for an Ethereum based native (macOS, Linux and Windows) Decentralize Application (DApp) with Go and ReactJS as the development framework.
 
 ## Prerequisite
 
-This project is an adjunct to [https://github.com/openconsentia/gosol](https://github.com/openconsentia/gosol). Clone that project and use it generate Go binding for your solidity contract. This will ensure that DApp you are building here is able to interact with your solidity contract.
+* Clone [https://github.com/openconsentia/gosol](https://github.com/openconsentia/gosol). This is an adjunct to this devkit. Use it to generate Go binding for your Solidity contract.
 
-Please install docker.
+* Docker.
 
-## What to expect in this project?
-
-| Item | Description |
-| --- | --- |
-| Geth wrapper| Using Geth packages to build middleware. |
-| Infura wrapper | Wrappers with calls via Infura. |
+* Go tools 1.16
 
 ## How to use this project?
 
-Please refer to the following documents:
+* STEP 1: Click the button named `Use this template`.
 
-* [docs/layout.md](../docs/layout.md)
+* STEP 2: Rename the module in [go.mod](./go.mod).
 
-## Caveat
+* STEP 3: Rename this folder [./cmd/dapp](./cmd/goreact) to one of your choice (`./cmd/<your-choice>`).
 
-The objective of this project to experiment with concepts and is **NOT** intended to build production grade product. The features and functionality in this project is constantly under development and not necessarily bug free. The features and functionality may be removed without notification or due consideration for backward compatibility.
+* STEP 4: Modify these scripts:
+    * [./build/package/builder.yaml](./build/package/builder.yaml);
+    * [./deployments/dev/docker-compose.yaml](./deployments/dev/docker-compose.yaml).
 
-If you find all or aspect of this project useful, please clone this project and develop it independently of this project.
+* STEP 5: Extends the [./web/reactjs](./web/reactjs).
+
+* STEP 6: Extend the Go codes in `./cmd/<your-choice>` and [./internal](./internal).
+
+* STEP 7: Build your project.
+
+* STEP 8: To see you built artefacts (native or container) apps in action.
 
 ## Copyright Notice
 
